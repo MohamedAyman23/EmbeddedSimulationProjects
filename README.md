@@ -33,12 +33,6 @@ Component_Name/
 - Project.pdsprj # Proteus simulation file
 - Project Backups
 
-yaml
-Copy
-Edit
-
----
-
 ## 🚀 Getting Started
 
 1. Open the `.dsn` file in Proteus.
