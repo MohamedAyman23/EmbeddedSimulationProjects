@@ -30,10 +30,8 @@ This repository contains a collection of embedded systems simulation projects bu
 
 Each folder contains:
 Component_Name/
-- Project.dsn # Proteus simulation file
-- Code/ # C source code (if applicable)
-- Hex/ # Compiled hex file (if needed)
-- README.md # Module-specific explanation
+- Project.pdsprj # Proteus simulation file
+- Project Backups
 
 yaml
 Copy
