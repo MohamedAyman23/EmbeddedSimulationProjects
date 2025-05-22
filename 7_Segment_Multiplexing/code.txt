@@ -1,0 +1,37 @@
+code to make the digital time clock using for loop
+
+for(counter = 0; counter < 50; counter++){
+            ret = gpio_port_write_logic(PORTD_INDEX, 0x3E);
+            ret +gpio_port_write_logic(PORTC_INDEX, ((uint8)(hours / 10)));
+            __delay_us(3333);// this time calculated to get 20ms for 50 times which means 1 second
+            ret = gpio_port_write_logic(PORTD_INDEX, 0x3D);
+            ret +gpio_port_write_logic(PORTC_INDEX, ((uint8)(hours % 10)));
+            __delay_us(3333);
+            ret = gpio_port_write_logic(PORTD_INDEX, 0x3B);
+            ret +gpio_port_write_logic(PORTC_INDEX, ((uint8)(minutes / 10)));
+            __delay_us(3333);
+            ret = gpio_port_write_logic(PORTD_INDEX, 0x37);
+            ret +gpio_port_write_logic(PORTC_INDEX, ((uint8)(minutes % 10)));
+            __delay_us(3333);
+            ret = gpio_port_write_logic(PORTD_INDEX, 0x2F);
+            ret +gpio_port_write_logic(PORTC_INDEX, ((uint8)(seconds / 10)));
+            __delay_us(3333);
+            ret = gpio_port_write_logic(PORTD_INDEX, 0x1F);
+            ret +gpio_port_write_logic(PORTC_INDEX, ((uint8)(seconds % 10)));
+            __delay_us(3333);
+        }
+        seconds++;
+        if(60 == seconds)
+        {
+            minutes++;
+            seconds = 0;
+        }
+        if(60 == minutes)
+        {
+            hours++;
+            minutes = 0;
+        }
+        if(24 == hours)
+        {
+            hours = 0;
+        }

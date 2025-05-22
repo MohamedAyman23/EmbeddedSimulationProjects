@@ -1,0 +1,65 @@
+#include "application.h"
+
+uint8 counter = 0, number = 80;
+Std_ReturnType ret = E_NOT_OK;
+segment_t seg1 = {
+    .segment_pins[0].port = PORTC_INDEX,
+    .segment_pins[0].pin = pin0,
+    .segment_pins[0].direction = GPIO_DIRECTION_OUTPUT,
+    .segment_pins[0].logic = GPIO_LOW,
+    .segment_pins[1].port = PORTC_INDEX,
+    .segment_pins[1].pin = pin1,
+    .segment_pins[1].direction = GPIO_DIRECTION_OUTPUT,
+    .segment_pins[1].logic = GPIO_LOW,
+    .segment_pins[2].port = PORTC_INDEX,
+    .segment_pins[2].pin = pin2,
+    .segment_pins[2].direction = GPIO_DIRECTION_OUTPUT,
+    .segment_pins[2].logic = GPIO_LOW,
+    .segment_pins[3].port = PORTC_INDEX,
+    .segment_pins[3].pin = pin3,
+    .segment_pins[3].direction = GPIO_DIRECTION_OUTPUT,
+    .segment_pins[3].logic = GPIO_LOW
+};
+pin_config_t seg1_enable = {
+    .port = PORTD_INDEX,
+    .pin = pin0,
+    .direction = GPIO_DIRECTION_OUTPUT,
+    .logic = GPIO_LOW
+};
+pin_config_t seg2_enable = {
+    .port = PORTD_INDEX,
+    .pin = pin1,
+    .direction = GPIO_DIRECTION_OUTPUT,
+    .logic = GPIO_LOW
+};
+
+int main() {
+    application_initialize();
+    while(1){  
+        for(counter = 0; counter < 50; counter++)
+        {ret = seven_segment_write_number(&seg1, (uint8)(number / 10));
+            ret = gpio_pin_write_logic(&seg1_enable, GPIO_HIGH);
+            __delay_ms(10);
+            ret = gpio_pin_write_logic(&seg1_enable, GPIO_LOW);
+
+            ret = seven_segment_write_number(&seg1, (uint8)(number % 10));
+            ret = gpio_pin_write_logic(&seg2_enable, GPIO_HIGH);
+            __delay_ms(10);
+            ret = gpio_pin_write_logic(&seg2_enable, GPIO_LOW);
+        }
+        
+        number++;
+        if(number == 100)
+        {
+            number =0;
+        }
+    }
+
+    return (EXIT_SUCCESS);
+}
+
+void application_initialize(void) {
+    ret = seven_segment_intialize(&seg1);
+    ret = gpio_pin_initialize(&seg1_enable);
+    ret = gpio_pin_initialize(&seg2_enable);
+}
